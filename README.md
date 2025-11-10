@@ -53,7 +53,7 @@ Students often ask similar questions about CVs, LinkedIn profiles, cover letters
 
 ```bash
 git clone https://github.com/drheaa/mentra-prp-ai-agent
-cd prp-ai-agent
+cd mentra-prp-ai-agent
 ```
 
 ### 2. Create a virtual environment
@@ -181,3 +181,4 @@ Simple flow:
 - Trisha Mukherjee
 - Devanshi Rhea Aucharaz
 - Makhabat Zhyrgalbekova
+

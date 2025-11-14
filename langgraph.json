@@ -1,0 +1,9 @@
+{
+  "graphs": {
+    "prp-ai-agent": "backend.graphstructure:build_graph"
+  },
+  "environment": ".env",
+  "dependencies": [
+    "."
+  ]
+}

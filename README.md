@@ -2,183 +2,351 @@
 
 This project is developed as part of the **Bachelor of Data Science Capstone Project I** at **SP Jain School of Global Management**.
 
-The AI agent, named **Mentra**, supports the **Professional Readiness Program (PRP)** by providing students and mentors with a single platform for quick, reliable, and personalized assistance.
+**Mentra** is a prototype AI assistant designed to support the **Professional Readiness Program (PRP)** by providing students and mentors with fast, reliable, and personalized career guidance.
+
+The system centralizes PRP-related information and automates repetitive mentor queries, allowing mentors to focus more on personalized coaching instead of answering the same administrative questions repeatedly.
+
+Mentra integrates conversational AI, a structured database, and a lightweight web interface to create a single access point for professional readiness support.
 
 ---
 
-## Overview
+# Overview
 
-Students often ask similar questions about CVs, LinkedIn profiles, cover letters, interviews, immigration and work rights, and skill development. Mentors spend valuable time answering repetitive queries instead of focusing on one-on-one coaching.
+Students frequently ask similar questions related to:
 
-**Mentra** is a conversational assistant that:
-- Answers questions about professional readiness, PRP events, and mentoring.
-- Helps with career preparation topics such as CVs, LinkedIn, and interviews.
-- Redirects students to schedule one-on-one sessions with mentors when needed.
-- Automates routine administrative tasks like attendance tracking and progress summaries.
-- Connects to anonymized PRP data through a secure Supabase database.
+- CV and resume improvement  
+- LinkedIn profile optimization  
+- Cover letter writing  
+- Interview preparation  
+- PRP event participation  
+- Immigration and work rights  
+- Professional skill development  
 
----
+PRP mentors often spend a large portion of their time answering repetitive questions.
 
-## Folder Structure
+**Mentra solves this by acting as a conversational assistant that:**
 
-- prp-ai-agent/
-    - backend/             # FastAPI backend and business logic
-        - main.py
-        - routes/
-        - services/
-    - frontend/            # Streamlit or React interface
-        - app.py
-        - components/
-    - supabase/            # SQL setup and database schema
-        - schema_enums.sql
-        - core_tables.sql
-        - booking_system.sql
-        - indexes.sql
-        - rls_policies.sql
-        - views.sql
-        - seed_data.sql
-    - data/                # Sample or anonymized PRP data
-        - sample_prp.csv
-    - venv/                # Python virtual environment (not committed)
-    - .env                 # Environment variables (Supabase URL, keys)
-    - requirements.txt     # Python dependencies
-    - README.md            # Project documentation
-    - .gitignore
+- Answers common PRP-related questions.
+- Provides career preparation guidance.
+- Retrieves information from PRP datasets.
+- Helps students navigate mentoring opportunities.
+- Reduces administrative workload for mentors.
+
+The system uses anonymized or sample PRP data to demonstrate how an AI assistant could streamline communication between students and PRP staff.
 
 ---
 
-## Setting Up the Project
+# Key Features
 
-### 1. Clone the repository
+Mentra provides several core capabilities.
+
+## Conversational PRP Support
+
+Students can ask questions about PRP activities, career preparation, and mentoring through a chat interface.
+
+## Career Readiness Guidance
+
+The agent provides structured advice on:
+
+- CV improvement
+- LinkedIn optimization
+- Cover letter writing
+- Interview preparation
+
+## PRP Data Integration
+
+Mentra connects to a **Supabase PostgreSQL database** containing anonymized PRP data such as:
+
+- event schedules
+- attendance records
+- mentoring sessions
+- readiness metrics
+
+## Mentor Redirection
+
+If a query requires personalized guidance, Mentra recommends scheduling a session with a PRP mentor.
+
+## Administrative Automation
+
+The system can support tasks such as:
+
+- attendance summaries
+- event information retrieval
+- mentoring session lookup
+
+---
+
+# System Architecture
+
+Mentra follows a layered architecture consisting of four main components.
+
+## 1. User Layer (Frontend)
+
+Students and mentors interact with the system through a **chat-based interface**.
+
+Responsibilities:
+
+- Accept user queries
+- Display AI responses
+- Provide basic interaction features
+
+Technologies:
+
+- Streamlit or React
+- HTML / CSS / JavaScript
+
+---
+
+## 2. Application Layer (Backend)
+
+The backend acts as the coordination layer between the user interface, AI model, and database.
+
+Responsibilities:
+
+- prompt engineering
+- query interpretation
+- workflow orchestration
+- API communication
+
+Technologies:
+
+- Python
+- FastAPI
+- LangChain / LangGraph
+
+---
+
+## 3. AI Processing Layer
+
+This layer powers the reasoning capability of the system.
+
+Responsibilities:
+
+- interpret user questions
+- generate contextual responses
+- integrate external knowledge sources
+
+Technologies:
+
+- OpenAI API
+- Gemini / Claude
+- embedding models
+- vector storage
+
+---
+
+## 4. Data Layer
+
+The data layer stores PRP-related datasets used by the agent.
+
+Responsibilities:
+
+- storing structured program data
+- managing access permissions
+- enabling secure queries
+
+Technologies:
+
+- Supabase (PostgreSQL)
+- Row Level Security (RLS)
+
+---
+
+# High-Level Workflow
+
+
+Student / Mentor
+↓
+Frontend Chat Interface
+↓
+FastAPI Backend
+↓
+LangChain / LangGraph Agent
+↓
+LLM API (OpenAI / Gemini / Claude)
+↓
+Supabase Database (PRP Data)
+↓
+Response Processor
+↓
+Frontend Display
+
+
+This architecture allows Mentra to combine conversational AI with structured institutional data to deliver contextual responses.
+
+---
+
+# Folder Structure
+
+```
+prp-ai-agent/
+
+backend/ # FastAPI backend and business logic
+main.py
+routes/
+services/
+
+frontend/ # Streamlit or React interface
+app.py
+components/
+
+supabase/ # SQL setup and database schema
+schema_enums.sql
+core_tables.sql
+booking_system.sql
+indexes.sql
+rls_policies.sql
+views.sql
+seed_data.sql
+
+data/ # Sample or anonymized PRP data
+sample_prp.csv
+
+venv/ # Python virtual environment (not committed)
+
+.env # Environment variables
+
+requirements.txt # Python dependencies
+
+README.md # Project documentation
+
+.gitignore
+
+```
+
+
+---
+
+# Setting Up the Project
+
+## 1. Clone the repository
 
 ```bash
 git clone https://github.com/drheaa/mentra-prp-ai-agent
 cd mentra-prp-ai-agent
 ```
 
-### 2. Create a virtual environment
+## 2. Create a virtual environment
 
-macOS / Linux:
-```bash
+- macOS / Linux
+```bash 
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Windows (PowerShell):
-```powershell
+- Windows
+```bash
 python -m venv venv
 venv\Scripts\Activate.ps1
 ```
-
-### 3. Install dependencies
+## 3. Install dependencies
 
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Set up the environment file
-
-Create a `.env` file in the project root and add your Supabase and AI credentials. Example:
+## 4. Set up environment variables
+Create a .env file in the root directory.
 
 ```env
-# -------- SUPABASE CONFIG --------
-SUPABASE_URL=https://<your-project-id>.supabase.co
-SUPABASE_ANON_KEY=<your-anon-public-key>
-SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
-SUPABASE_DB_URL=postgresql://postgres:<your-db-password>@<your-project-id>.supabase.co:5432/postgres?sslmode=require
+SUPABASE_URL=https://<project-id>.supabase.co
+SUPABASE_ANON_KEY=<anon-key>
+SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
 
-# -------- LLM / AI CONFIG --------
-OPENAI_API_KEY=<your-openai-api-key>
-LANGCHAIN_API_KEY=<your-langchain-or-langgraph-api-key>
-LANGCHAIN_TRACING_V2=true
-LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+OPENAI_API_KEY=<openai-key>
 
-# -------- APP CONFIG --------
 ENV=development
 PORT=8000
-SECRET_KEY=<random-string-for-fastapi>
+SECRET_KEY=<random-string>
 LOG_LEVEL=info
 ```
 
-### 5. Run the backend (FastAPI)
+## 5. Run the backend server
 
 ```bash
-uvicorn backend.main:app --reload
+npm run dev
 ```
 
-### 6. Run the frontend (Streamlit)
+## 6. Run the frontend interface
 
 ```bash
 streamlit run frontend/app.py
 ```
 
----
+-----
 
-## Database Setup (Supabase)
+# Database Setup
 
-All SQL files are in the `supabase/` folder. Run them in order using the Supabase SQL editor or the CLI.
+All SQL files required for the database are located in the supabase/ folder.
 
-Example local steps (installing the Postgres client and running a helper script):
+Run them sequentially using the Supabase SQL editor or CLI.
 
-```bash
-cd supabase
-sudo apt install postgresql-client    # or use your platform's package manager
-chmod +x run_all.sh                   # make the script executable
-bash run_all.sh                       # run the database setup
-```
 
-This creates PRP tables, views, and policies used by the AI agent.
+-----
 
----
+# Tech Stack
 
-## Features
+## Backend
 
-- Conversational query handling for PRP students and mentors.
-- Integration with anonymized PRP and JPT data.
-- Mentor session scheduling with Zoom link placeholders.
-- Role-based access via Supabase Row-Level Security (RLS).
-- Lightweight design using open-source tools.
+- Python
 
----
+- FastAPI
 
-## How Mentra Works
+- LangChain / LangGraph
 
-Mentra connects three main layers:
+## Frontend
 
-1. User Interaction Layer (Frontend)
-     - Students and mentors interact via a Streamlit or React chat UI.
+- Streamlit or React
 
-2. AI Processing Layer (Backend)
-     - FastAPI backend uses LangChain and OpenAI APIs to interpret intent (CV advice, event info, booking requests) and interact with the database.
+- HTML / CSS / JavaScript
 
-3. Data Layer (Supabase)
-     - PRP data (events, attendance, mentoring sessions, skills, bookings) stored in a Supabase Postgres DB with RLS to ensure proper access control.
+## Database
 
-Simple flow:
-- Student/Mentor → Frontend (Chat UI)
--         ↓
--      FastAPI Backend → LangChain → OpenAI API
--         ↓
--      Supabase Database (PRP Data + Bookings)
--         ↓
--   Response / Action (Answer or Schedule Session)
+- Supabase (PostgreSQL)
 
----
+## AI / NLP
 
-## Tech Stack
+- GROQ AI API
 
-- Backend: Python, FastAPI, LangChain
-- Frontend: Streamlit or React
-- Database: Supabase (PostgreSQL)
-- AI/NLP: OpenAI API, spaCy, Hugging Face
-- Other Tools: Pandas, NumPy, Git, VS Code, Figma
+- Hugging Face
 
----
+## Tools
+- Git / GitHub
 
-## Team
+- VS Code
 
-- Trisha Mukherjee
+
+----
+
+# Project Scope
+
+Mentra is a prototype system built for academic purposes.
+
+Included in scope:
+
+- conversational AI prototype
+
+- PRP data integration
+
+- chat interface
+
+- database security using RLS
+
+Out of scope:
+
+- full institutional deployment
+
+- handling real student data
+
+- production infrastructure
+
+--- 
+
+# Team
+
 - Devanshi Rhea Aucharaz
+
 - Makhabat Zhyrgalbekova
 
+- Trisha Mukherjee
